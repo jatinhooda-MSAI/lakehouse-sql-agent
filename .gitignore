@@ -1,0 +1,15 @@
+.env
+.venv/
+data/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.sqlite
+*.sqlite3
+*.db
+*.duckdb
+*.safetensors
+*.bin
+*.pt
+*.gguf
