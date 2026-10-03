@@ -1,0 +1,564 @@
+- id: e01
+  level: easy
+  question: How many crime incidents occurred in March 2026?
+  sql: |
+    SELECT SUM(incidents) FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2026-03-01' AND crime_date < DATE '2026-04-01'
+
+- id: e02
+  level: easy
+  question: How many homicides occurred in 2025?
+  sql: |
+    SELECT SUM(incidents) FROM gold.fct_crimes_daily
+    WHERE primary_type = 'HOMICIDE'
+      AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+
+- id: e03
+  level: easy
+  question: How many arrests were made for crimes that occurred in August 2026?
+  sql: |
+    SELECT SUM(arrests) FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2026-08-01' AND crime_date < DATE '2026-09-01'
+
+- id: e04
+  level: easy
+  question: How many domestic incidents were recorded in 2025?
+  sql: |
+    SELECT SUM(domestic_incidents) FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+
+- id: e05
+  level: easy
+  question: How many community areas does Chicago have, not counting the unknown area?
+  sql: |
+    SELECT COUNT(*) FROM gold.dim_community_area WHERE community_area <> 0
+
+- id: e06
+  level: easy
+  question: What is the name of community area number 32?
+  sql: |
+    SELECT community_area_name FROM gold.dim_community_area WHERE community_area = 32
+
+- id: e07
+  level: easy
+  question: How many thefts occurred on July 4, 2026?
+  sql: |
+    SELECT SUM(incidents) FROM gold.fct_crimes_daily
+    WHERE primary_type = 'THEFT' AND crime_date = DATE '2026-07-04'
+
+- id: e08
+  level: easy
+  question: How many non-duplicate 311 requests were opened in June 2026?
+  sql: |
+    SELECT SUM(requests_opened) FROM gold.fct_311_daily
+    WHERE activity_date >= DATE '2026-06-01' AND activity_date < DATE '2026-07-01'
+
+- id: e09
+  level: easy
+  question: How many non-duplicate pothole in street complaints were opened in April 2026?
+  sql: |
+    SELECT SUM(requests_opened) FROM gold.fct_311_daily
+    WHERE sr_type = 'Pothole in Street Complaint'
+      AND activity_date >= DATE '2026-04-01' AND activity_date < DATE '2026-05-01'
+
+- id: e10
+  level: easy
+  question: How many 311 service request records have the status Open?
+  sql: |
+    SELECT COUNT(*) FROM silver.stg_311_requests WHERE status = 'Open'
+
+- id: e11
+  level: easy
+  question: How many non-duplicate 311 requests were closed from January through March 2026?
+  sql: |
+    SELECT SUM(requests_closed) FROM gold.fct_311_daily
+    WHERE activity_date >= DATE '2026-01-01' AND activity_date < DATE '2026-04-01'
+
+- id: e12
+  level: easy
+  question: How many crime incidents occurred on January 1, 2026?
+  sql: |
+    SELECT SUM(incidents) FROM gold.fct_crimes_daily WHERE crime_date = DATE '2026-01-01'
+
+- id: e13
+  level: easy
+  question: How many distinct primary crime types were recorded in September 2026?
+  sql: |
+    SELECT COUNT(DISTINCT primary_type) FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2026-09-01' AND crime_date < DATE '2026-10-01'
+
+- id: e14
+  level: easy
+  question: How many motor vehicle thefts occurred in the Loop community area in 2025?
+  sql: |
+    SELECT SUM(f.incidents)
+    FROM gold.fct_crimes_daily f
+    JOIN gold.dim_community_area d USING (community_area)
+    WHERE d.community_area_name = 'LOOP' AND f.primary_type = 'MOTOR VEHICLE THEFT'
+      AND f.crime_date >= DATE '2025-01-01' AND f.crime_date < DATE '2026-01-01'
+
+- id: e15
+  level: easy
+  question: How many 311 requests created in 2025 came in by phone call, counting duplicates?
+  sql: |
+    SELECT COUNT(*) FROM silver.stg_311_requests
+    WHERE origin = 'Phone Call'
+      AND created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'
+
+- id: m01
+  level: medium
+  question: Which primary crime type had the most incidents in 2025? Return the type and its incident count.
+  sql: |
+    SELECT primary_type, SUM(incidents) AS incidents
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+    GROUP BY primary_type
+    ORDER BY incidents DESC
+    LIMIT 1
+
+- id: m02
+  level: medium
+  question: Which 5 community areas had the most crime incidents in July 2026? Return the community area name and the incident count.
+  sql: |
+    SELECT d.community_area_name, SUM(f.incidents) AS incidents
+    FROM gold.fct_crimes_daily f
+    JOIN gold.dim_community_area d USING (community_area)
+    WHERE f.crime_date >= DATE '2026-07-01' AND f.crime_date < DATE '2026-08-01'
+    GROUP BY d.community_area_name
+    ORDER BY incidents DESC
+    LIMIT 5
+
+- id: m03
+  level: medium
+  question: What were the total crime incidents in each month from January to June 2026? Return the first day of the month and the count.
+  sql: |
+    SELECT month, SUM(incidents) AS incidents
+    FROM gold.mart_area_month
+    WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-06-01'
+    GROUP BY month
+    ORDER BY month
+
+- id: m04
+  level: medium
+  question: Which date in 2025 had the most crime incidents? Return the date and the count.
+  sql: |
+    SELECT crime_date, SUM(incidents) AS incidents
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+    GROUP BY crime_date
+    ORDER BY incidents DESC
+    LIMIT 1
+
+- id: m05
+  level: medium
+  question: What fraction of narcotics incidents in 2025 led to an arrest?
+  sql: |
+    SELECT SUM(arrests) / SUM(incidents)
+    FROM gold.fct_crimes_daily
+    WHERE primary_type = 'NARCOTICS'
+      AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+
+- id: m06
+  level: medium
+  question: Which 311 request type had the most non-duplicate requests opened in May 2026? Return the type and the count.
+  sql: |
+    SELECT sr_type, SUM(requests_opened) AS requests_opened
+    FROM gold.fct_311_daily
+    WHERE activity_date >= DATE '2026-05-01' AND activity_date < DATE '2026-06-01'
+    GROUP BY sr_type
+    ORDER BY requests_opened DESC
+    LIMIT 1
+
+- id: m07
+  level: medium
+  question: What was the average number of crime incidents per day in February 2026?
+  sql: |
+    SELECT AVG(daily)
+    FROM (
+      SELECT crime_date, SUM(incidents) AS daily
+      FROM gold.fct_crimes_daily
+      WHERE crime_date >= DATE '2026-02-01' AND crime_date < DATE '2026-03-01'
+      GROUP BY crime_date
+    )
+
+- id: m08
+  level: medium
+  question: What fraction of crime incidents in 2025 were domestic?
+  sql: |
+    SELECT SUM(domestic_incidents) / SUM(incidents)
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+
+- id: m09
+  level: medium
+  question: Which police district had the most crime incidents that occurred in 2025? Return the district and the count.
+  sql: |
+    SELECT district, COUNT(*) AS incidents
+    FROM silver.stg_crimes
+    WHERE occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'
+    GROUP BY district
+    ORDER BY incidents DESC
+    LIMIT 1
+
+- id: m10
+  level: medium
+  question: Which 5 location descriptions had the most thefts in 2025? Return the location description and the count.
+  sql: |
+    SELECT location_description, COUNT(*) AS thefts
+    FROM silver.stg_crimes
+    WHERE primary_type = 'THEFT'
+      AND occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'
+    GROUP BY location_description
+    ORDER BY thefts DESC
+    LIMIT 5
+
+- id: m11
+  level: medium
+  question: Which city department owned the most non-duplicate 311 requests created in 2025? Return the department and the count.
+  sql: |
+    SELECT owner_department, COUNT(*) AS requests
+    FROM silver.stg_311_requests
+    WHERE NOT is_duplicate
+      AND created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'
+    GROUP BY owner_department
+    ORDER BY requests DESC
+    LIMIT 1
+
+- id: m12
+  level: medium
+  question: How many crime incidents occurred in the Austin community area in 2025?
+  sql: |
+    SELECT SUM(incidents)
+    FROM gold.mart_area_month
+    WHERE community_area_name = 'AUSTIN'
+      AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+
+- id: m13
+  level: medium
+  question: How many community areas, excluding the unknown area, had more than 5,000 crime incidents in 2025?
+  sql: |
+    SELECT COUNT(*)
+    FROM (
+      SELECT community_area
+      FROM gold.fct_crimes_daily
+      WHERE community_area <> 0
+        AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+      GROUP BY community_area
+      HAVING SUM(incidents) > 5000
+    )
+
+- id: m14
+  level: medium
+  question: Which day of the week had the most crime incidents in 2025? Return the day name and the count.
+  sql: |
+    SELECT dayname(crime_date) AS day, SUM(incidents) AS incidents
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+    GROUP BY day
+    ORDER BY incidents DESC
+    LIMIT 1
+
+- id: m15
+  level: medium
+  question: What was the median number of days to close non-duplicate graffiti removal requests that were closed in March 2026?
+  sql: |
+    SELECT MEDIAN(days_to_close)
+    FROM silver.stg_311_requests
+    WHERE sr_type = 'Graffiti Removal Request' AND NOT is_duplicate
+      AND closed_at >= TIMESTAMP '2026-03-01' AND closed_at < TIMESTAMP '2026-04-01'
+
+- id: m16
+  level: medium
+  question: What fraction of 311 requests created in 2025 were marked as duplicates?
+  sql: |
+    SELECT AVG(CASE WHEN is_duplicate THEN 1.0 ELSE 0.0 END)
+    FROM silver.stg_311_requests
+    WHERE created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'
+
+- id: m17
+  level: medium
+  question: Which hour of the day (0 to 23) had the most crime incidents in 2025? Return the hour and the count.
+  sql: |
+    SELECT EXTRACT(hour FROM occurred_at) AS hour, COUNT(*) AS incidents
+    FROM silver.stg_crimes
+    WHERE occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'
+    GROUP BY hour
+    ORDER BY incidents DESC
+    LIMIT 1
+
+- id: m18
+  level: medium
+  question: In which month of 2025 were the most non-duplicate 311 requests opened? Return the first day of the month and the count.
+  sql: |
+    SELECT month, SUM(requests_opened) AS requests_opened
+    FROM gold.mart_area_month
+    WHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+    GROUP BY month
+    ORDER BY requests_opened DESC
+    LIMIT 1
+
+- id: m19
+  level: medium
+  question: On how many days in 2025 was at least one homicide recorded?
+  sql: |
+    SELECT COUNT(DISTINCT crime_date)
+    FROM gold.fct_crimes_daily
+    WHERE primary_type = 'HOMICIDE'
+      AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+
+- id: m20
+  level: medium
+  question: Which 3 community areas had the most non-duplicate rodent baiting or rat complaints opened in 2025? Return the community area name and the count.
+  sql: |
+    SELECT d.community_area_name, SUM(f.requests_opened) AS requests_opened
+    FROM gold.fct_311_daily f
+    JOIN gold.dim_community_area d USING (community_area)
+    WHERE f.sr_type = 'Rodent Baiting/Rat Complaint'
+      AND f.activity_date >= DATE '2025-01-01' AND f.activity_date < DATE '2026-01-01'
+    GROUP BY d.community_area_name
+    ORDER BY requests_opened DESC
+    LIMIT 3
+
+- id: h01
+  level: hard
+  question: For each month of 2025, what were the citywide crime incidents and non-duplicate 311 requests opened? Return the first day of the month, incidents and requests opened.
+  sql: |
+    SELECT month, SUM(incidents) AS incidents, SUM(requests_opened) AS requests_opened
+    FROM gold.mart_area_month
+    WHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+    GROUP BY month
+    ORDER BY month
+
+- id: h02
+  level: hard
+  question: Across the 77 community areas, excluding the unknown area, what is the Pearson correlation between total crime incidents in 2025 and total non-duplicate 311 requests opened in 2025?
+  sql: |
+    SELECT CORR(incidents, requests_opened)
+    FROM (
+      SELECT community_area, SUM(incidents) AS incidents, SUM(requests_opened) AS requests_opened
+      FROM gold.mart_area_month
+      WHERE community_area <> 0
+        AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+      GROUP BY community_area
+    )
+
+- id: h03
+  level: hard
+  question: For each month from February to August 2026, what were the total crime incidents and the change from the previous month? Return the first day of the month, the incidents and the change.
+  sql: |
+    WITH monthly AS (
+      SELECT month, SUM(incidents) AS incidents
+      FROM gold.mart_area_month
+      WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-08-01'
+      GROUP BY month
+    )
+    SELECT month, incidents, change
+    FROM (
+      SELECT month, incidents, incidents - LAG(incidents) OVER (ORDER BY month) AS change
+      FROM monthly
+    )
+    WHERE month >= DATE '2026-02-01'
+    ORDER BY month
+
+- id: h04
+  level: hard
+  question: For the Austin, Loop and Near North Side community areas, what was the most common primary crime type in 2025? Return the community area name, the crime type and its incident count.
+  sql: |
+    WITH by_type AS (
+      SELECT d.community_area_name, f.primary_type, SUM(f.incidents) AS incidents
+      FROM gold.fct_crimes_daily f
+      JOIN gold.dim_community_area d USING (community_area)
+      WHERE d.community_area_name IN ('AUSTIN', 'LOOP', 'NEAR NORTH SIDE')
+        AND f.crime_date >= DATE '2025-01-01' AND f.crime_date < DATE '2026-01-01'
+      GROUP BY d.community_area_name, f.primary_type
+    )
+    SELECT community_area_name, primary_type, incidents
+    FROM by_type
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY community_area_name ORDER BY incidents DESC) = 1
+
+- id: h05
+  level: hard
+  question: What was the average daily number of crime incidents over the seven days from July 4 through July 10, 2026?
+  sql: |
+    SELECT SUM(incidents) / 7.0
+    FROM gold.fct_crimes_daily
+    WHERE crime_date BETWEEN DATE '2026-07-04' AND DATE '2026-07-10'
+
+- id: h06
+  level: hard
+  question: Which 5 community areas, excluding the unknown area, had the highest ratio of non-duplicate 311 requests opened to crime incidents in 2025? Return the community area name and the ratio.
+  sql: |
+    SELECT community_area_name, SUM(requests_opened) / SUM(incidents) AS ratio
+    FROM gold.mart_area_month
+    WHERE community_area <> 0
+      AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+    GROUP BY community_area_name
+    ORDER BY ratio DESC
+    LIMIT 5
+
+- id: h07
+  level: hard
+  question: Which community area had the largest increase in crime incidents from January-June 2025 to January-June 2026? Return the community area name and the increase.
+  sql: |
+    WITH halves AS (
+      SELECT community_area_name,
+             SUM(incidents) FILTER (WHERE month BETWEEN DATE '2025-01-01' AND DATE '2025-06-01') AS h1_2025,
+             SUM(incidents) FILTER (WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-06-01') AS h1_2026
+      FROM gold.mart_area_month
+      GROUP BY community_area_name
+    )
+    SELECT community_area_name, h1_2026 - h1_2025 AS increase
+    FROM halves
+    ORDER BY increase DESC
+    LIMIT 1
+
+- id: h08
+  level: hard
+  question: For each month of 2025, give the crime incidents and the running total of incidents since January 2025. Return the first day of the month, the monthly incidents and the running total.
+  sql: |
+    SELECT month,
+           SUM(incidents) AS incidents,
+           SUM(SUM(incidents)) OVER (ORDER BY month) AS running_total
+    FROM gold.mart_area_month
+    WHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+    GROUP BY month
+    ORDER BY month
+
+- id: h09
+  level: hard
+  question: Compare total crime incidents from January 1 through August 31 in 2025 and in 2026. Return the year and the total.
+  sql: |
+    SELECT YEAR(crime_date) AS year, SUM(incidents) AS incidents
+    FROM gold.fct_crimes_daily
+    WHERE crime_date BETWEEN DATE '2025-01-01' AND DATE '2025-08-31'
+       OR crime_date BETWEEN DATE '2026-01-01' AND DATE '2026-08-31'
+    GROUP BY year
+    ORDER BY year
+
+- id: h10
+  level: hard
+  question: What was the arrest rate (arrests divided by incidents) in the Austin community area for each month of 2025? Return the first day of the month and the rate.
+  sql: |
+    SELECT month, arrest_rate
+    FROM gold.mart_area_month
+    WHERE community_area_name = 'AUSTIN'
+      AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'
+    ORDER BY month
+
+- id: h11
+  level: hard
+  question: Among primary crime types with at least 500 incidents in 2025, which had the highest fraction of incidents with an arrest? Return the type and the fraction.
+  sql: |
+    SELECT primary_type, SUM(arrests) / SUM(incidents) AS arrest_fraction
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+    GROUP BY primary_type
+    HAVING SUM(incidents) >= 500
+    ORDER BY arrest_fraction DESC
+    LIMIT 1
+
+- id: h12
+  level: hard
+  question: What fraction of crime incidents in 2025 had no community area?
+  sql: |
+    SELECT SUM(incidents) FILTER (WHERE community_area = 0) / SUM(incidents)
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+
+- id: h13
+  level: hard
+  question: For each 311 owner department, which request type had the most non-duplicate requests created in 2025? Return the department, the request type and the count.
+  sql: |
+    WITH by_type AS (
+      SELECT owner_department, sr_type, COUNT(*) AS requests
+      FROM silver.stg_311_requests
+      WHERE NOT is_duplicate
+        AND created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'
+      GROUP BY owner_department, sr_type
+    )
+    SELECT owner_department, sr_type, requests
+    FROM by_type
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY owner_department ORDER BY requests DESC) = 1
+
+- id: h14
+  level: hard
+  question: In July 2026, what was the ratio of non-duplicate 311 requests opened to crime incidents in the Lincoln Park community area?
+  sql: |
+    SELECT requests_opened / incidents
+    FROM gold.mart_area_month
+    WHERE community_area_name = 'LINCOLN PARK' AND month = DATE '2026-07-01'
+
+- id: h15
+  level: hard
+  question: On how many days in 2025 was the daily number of crime incidents above the 2025 daily average?
+  sql: |
+    WITH daily AS (
+      SELECT crime_date, SUM(incidents) AS incidents
+      FROM gold.fct_crimes_daily
+      WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+      GROUP BY crime_date
+    )
+    SELECT COUNT(*) FROM daily WHERE incidents > (SELECT AVG(incidents) FROM daily)
+
+- id: h16
+  level: hard
+  question: Among community areas with at least 500 non-duplicate 311 requests closed in March 2026, which had the lowest median days to close that month? Return the community area name and the median.
+  sql: |
+    SELECT community_area_name, median_days_to_close
+    FROM gold.mart_area_month
+    WHERE month = DATE '2026-03-01' AND requests_closed >= 500
+    ORDER BY median_days_to_close
+    LIMIT 1
+
+- id: h17
+  level: hard
+  question: Which week of 2025, with weeks starting on Monday, had the most crime incidents? Return the Monday that starts the week and the count.
+  sql: |
+    SELECT date_trunc('week', crime_date) AS week_start, SUM(incidents) AS incidents
+    FROM gold.fct_crimes_daily
+    WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'
+    GROUP BY week_start
+    ORDER BY incidents DESC
+    LIMIT 1
+
+- id: h18
+  level: hard
+  question: For each day from March 1 to March 7, 2026, what were the citywide crime incidents and the non-duplicate 311 requests opened? Return the date, incidents and requests opened.
+  sql: |
+    WITH crimes AS (
+      SELECT crime_date AS day, SUM(incidents) AS incidents
+      FROM gold.fct_crimes_daily
+      WHERE crime_date BETWEEN DATE '2026-03-01' AND DATE '2026-03-07'
+      GROUP BY crime_date
+    ),
+    requests AS (
+      SELECT activity_date AS day, SUM(requests_opened) AS requests_opened
+      FROM gold.fct_311_daily
+      WHERE activity_date BETWEEN DATE '2026-03-01' AND DATE '2026-03-07'
+      GROUP BY activity_date
+    )
+    SELECT day, incidents, requests_opened
+    FROM crimes JOIN requests USING (day)
+    ORDER BY day
+
+- id: h19
+  level: hard
+  question: Among police districts with at least 1,000 crime incidents that occurred in 2025, which 3 had the highest fraction of incidents with an arrest? Return the district and the fraction.
+  sql: |
+    SELECT district, AVG(CASE WHEN arrest THEN 1.0 ELSE 0.0 END) AS arrest_fraction
+    FROM silver.stg_crimes
+    WHERE occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'
+    GROUP BY district
+    HAVING COUNT(*) >= 1000
+    ORDER BY arrest_fraction DESC
+    LIMIT 3
+
+- id: h20
+  level: hard
+  question: Which community area had the most crime incidents in June 2026, and how many non-duplicate 311 requests were opened there that month? Return the community area name, the incidents and the requests opened.
+  sql: |
+    SELECT community_area_name, incidents, requests_opened
+    FROM gold.mart_area_month
+    WHERE month = DATE '2026-06-01'
+    ORDER BY incidents DESC
+    LIMIT 1
