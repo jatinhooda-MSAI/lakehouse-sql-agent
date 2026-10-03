@@ -1,5 +1,6 @@
 import argparse
 import json
+import math
 import os
 import re
 import sqlite3
@@ -18,7 +19,7 @@ DBT_TARGET = Path(os.environ.get("DBT_TARGET", ROOT.parent / "chicago-lakehouse"
 MAX_ATTEMPTS = 3
 MAX_ROWS = 1000
 TIMEOUT_S = 10
-MAX_ESTIMATED_ROWS = 100_000_000
+MAX_ESTIMATED_ROWS = 1_000_000_000
 
 SYSTEM = """You write one {dialect} SQL query that answers a question about this database.
 {context}
@@ -99,14 +100,22 @@ def sqlite_context(con) -> str:
     return "\n".join(lines)
 
 
+def plan_rows(node: dict, seen: list[int]) -> int:
+    children = [plan_rows(child, seen) for child in node["children"]]
+    estimate = node.get("extra_info", {}).get("Estimated Cardinality")
+    if node["name"] in ("CROSS_PRODUCT", "BLOCKWISE_NL_JOIN", "NESTED_LOOP_JOIN"):
+        rows = math.prod(children)
+    else:
+        rows = int(estimate) if estimate is not None else sum(children)
+    seen.append(rows)
+    return rows
+
+
 def estimated_rows(con, sql: str) -> int:
-    nodes = json.loads(con.execute("EXPLAIN (FORMAT JSON) " + sql).fetchall()[0][1])
-    most = 0
-    while nodes:
-        node = nodes.pop()
-        most = max(most, int(node.get("extra_info", {}).get("Estimated Cardinality", 0)))
-        nodes += node["children"]
-    return most
+    seen = []
+    for node in json.loads(con.execute("EXPLAIN (FORMAT JSON) " + sql).fetchall()[0][1]):
+        plan_rows(node, seen)
+    return max(seen)
 
 
 class Database:
