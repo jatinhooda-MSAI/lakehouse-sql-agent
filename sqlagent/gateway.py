@@ -29,9 +29,8 @@ CORRUPT_SHARE = 0.25
 SEED = 7
 
 tracer_provider = TracerProvider(resource=Resource.create({"service.name": "lakehouse-sql-agent"}))
-tracer_provider.add_span_processor(
-    SimpleSpanProcessor(ConsoleSpanExporter(out=sys.stderr, formatter=lambda s: s.to_json(indent=None) + "\n"))
-)
+console = ConsoleSpanExporter(out=sys.stderr, formatter=lambda span: span.to_json(indent=None) + "\n")
+tracer_provider.add_span_processor(SimpleSpanProcessor(console))
 if os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT"):
     tracer_provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
 tracer = tracer_provider.get_tracer("sqlagent.gateway")
@@ -72,11 +71,7 @@ def call_openai(model, system, messages, max_tokens):
 
 def call_anthropic(model, system, messages, max_tokens):
     r = client("anthropic").messages.create(
-        model=model,
-        max_tokens=max_tokens,
-        system=system,
-        messages=messages,
-        output_config={"effort": "low"},
+        model=model, max_tokens=max_tokens, system=system, messages=messages, output_config={"effort": "low"}
     )
     text = "".join(block.text for block in r.content if block.type == "text")
     return text, r.usage.input_tokens, r.usage.output_tokens, r.stop_reason, r.model
@@ -121,10 +116,10 @@ CALLS = {"openai": call_openai, "anthropic": call_anthropic, "offline": call_off
 def store() -> sqlite3.Connection:
     GATEWAY_DB.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(GATEWAY_DB)
-    con.execute("CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, response TEXT)")
-    con.execute(
-        "CREATE TABLE IF NOT EXISTS calls (ts REAL, provider TEXT, model TEXT, input_tokens INT, "
-        "output_tokens INT, cost_usd REAL, cached INT, latency_ms REAL)"
+    con.executescript(
+        "CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, response TEXT);"
+        "CREATE TABLE IF NOT EXISTS calls (ts REAL, provider TEXT, model TEXT, input_tokens INT,"
+        " output_tokens INT, cost_usd REAL, cached INT, latency_ms REAL);"
     )
     return con
 
@@ -152,35 +147,20 @@ def complete_with(name: str, system: str, messages: list[dict], max_tokens: int)
     hit = store().execute("SELECT response FROM cache WHERE key = ?", (key,)).fetchone()
     start = time.perf_counter()
     with tracer.start_as_current_span(f"chat {model}") as span:
-        span.set_attributes(
-            {
-                "gen_ai.operation.name": "chat",
-                "gen_ai.provider.name": name,
-                "gen_ai.request.model": model,
-                "gen_ai.request.max_tokens": max_tokens,
-                "gateway.cache_hit": hit is not None,
-            }
-        )
+        span.set_attributes({"gen_ai.operation.name": "chat", "gen_ai.provider.name": name})
+        span.set_attributes({"gen_ai.request.model": model, "gen_ai.request.max_tokens": max_tokens})
         response = json.loads(hit[0]) if hit else call_with_retries(name, model, system, messages, max_tokens, span)
         text, input_tokens, output_tokens, finish_reason, response_model = response
         cost = (input_tokens * PRICES[model][0] + output_tokens * PRICES[model][1]) / 1e6
-        span.set_attributes(
-            {
-                "gen_ai.response.model": response_model,
-                "gen_ai.response.finish_reasons": [finish_reason or ""],
-                "gen_ai.usage.input_tokens": input_tokens,
-                "gen_ai.usage.output_tokens": output_tokens,
-                "gateway.cost_usd": cost,
-            }
-        )
+        span.set_attributes({"gen_ai.response.model": response_model, "gen_ai.response.finish_reasons": [finish_reason]})
+        span.set_attributes({"gen_ai.usage.input_tokens": input_tokens, "gen_ai.usage.output_tokens": output_tokens})
+        span.set_attributes({"gateway.cost_usd": cost, "gateway.cache_hit": hit is not None})
     latency_ms = (time.perf_counter() - start) * 1000
     with store() as con:
         if not hit:
             con.execute("INSERT OR REPLACE INTO cache VALUES (?, ?)", (key, json.dumps(response)))
-        con.execute(
-            "INSERT INTO calls VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            (time.time(), name, model, input_tokens, output_tokens, 0.0 if hit else cost, int(bool(hit)), latency_ms),
-        )
+        row = (time.time(), name, model, input_tokens, output_tokens, 0.0 if hit else cost, int(bool(hit)), latency_ms)
+        con.execute("INSERT INTO calls VALUES (?, ?, ?, ?, ?, ?, ?, ?)", row)
     return Completion(text, name, model, input_tokens, output_tokens, cost, hit is not None)
 
 
