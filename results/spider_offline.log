@@ -1,0 +1,114 @@
+dev0092  schema error -> correct
+dev0099  correct
+dev0104  schema error -> correct
+dev0114  correct
+dev0119  schema error -> correct
+dev0120  correct
+dev0123  correct
+dev0125  correct
+dev0132  correct
+dev0136  schema error -> correct
+dev0138  correct
+dev0140  correct
+dev0148  correct
+dev0149  schema error -> correct
+dev0151  correct
+dev0152  correct
+dev0155  correct
+dev0161  schema error -> correct
+dev0166  schema error -> correct
+dev0177  schema error -> correct
+dev0002  correct
+dev0003  schema error -> correct
+dev0004  schema error -> correct
+dev0008  correct
+dev0013  correct
+dev0016  schema error -> correct
+dev0018  schema error -> correct
+dev0019  schema error -> correct
+dev0022  correct
+dev0024  correct
+dev0025  correct
+dev0026  correct
+dev0030  schema error -> correct
+dev0031  correct
+dev0032  correct
+dev0033  schema error -> correct
+dev0037  correct
+dev0038  correct
+dev0040  correct
+dev0044  correct
+dev0923  schema error -> correct
+dev0924  correct
+dev0930  schema error -> correct
+dev0935  schema error -> correct
+dev0936  schema error -> correct
+dev0945  correct
+dev0950  correct
+dev0951  correct
+dev0954  schema error -> correct
+dev0956  correct
+dev0957  correct
+dev0963  correct
+dev0967  correct
+dev0969  schema error -> correct
+dev0971  correct
+dev0979  correct
+dev0980  schema error -> correct
+dev0982  schema error -> correct
+dev0983  correct
+dev0987  schema error -> correct
+dev0047  correct
+dev0048  correct
+dev0049  schema error -> correct
+dev0053  correct
+dev0054  correct
+dev0058  correct
+dev0061  schema error -> correct
+dev0062  schema error -> correct
+dev0064  correct
+dev0067  correct
+dev0069  correct
+dev0070  correct
+dev0071  correct
+dev0074  correct
+dev0075  correct
+dev0076  correct
+dev0077  correct
+dev0079  correct
+dev0083  correct
+dev0086  correct
+dev0707  correct
+dev0729  correct
+dev0735  correct
+dev0740  correct
+dev0747  correct
+dev0751  correct
+dev0753  schema error -> correct
+dev0755  correct
+dev0763  correct
+dev0764  correct
+dev0767  correct
+dev0776  correct
+dev0799  correct
+dev0802  correct
+dev0808  correct
+dev0810  correct
+dev0817  correct
+dev0818  schema error -> correct
+dev0820  schema error -> correct
+dev0821  correct
+
+spider: 100 questions, providers offline, 0.3s
+accuracy at 1 attempt 0.700, at 3 attempts 1.000
+30 questions retried
+outcome               first attempt  final
+correct                          70    100
+schema error                     30      0
+group                   n  acc@1  acc@3
+car_1                  20  0.600  1.000
+concert_singer         20  0.650  1.000
+dog_kennels            20  0.550  1.000
+pets_1                 20  0.850  1.000
+world_1                20  0.850  1.000
+per question: 1198 input + 43 output tokens, $0.0000; total $0.0000

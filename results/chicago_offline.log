@@ -1,0 +1,67 @@
+e01      correct
+e02      schema error -> correct
+e03      schema error -> correct
+e04      correct
+e05      schema error -> correct
+e06      schema error -> correct
+e07      schema error -> correct
+e08      correct
+e09      schema error -> correct
+e10      correct
+e11      correct
+e12      correct
+e13      schema error -> correct
+e14      correct
+e15      correct
+m01      correct
+m02      correct
+m03      correct
+m04      correct
+m05      correct
+m06      correct
+m07      correct
+m08      correct
+m09      correct
+m10      correct
+m11      correct
+m12      correct
+m13      correct
+m14      schema error -> correct
+m15      correct
+m16      correct
+m17      correct
+m18      correct
+m19      correct
+m20      correct
+h01      schema error -> correct
+h02      correct
+h03      schema error -> correct
+h04      correct
+h05      correct
+h06      correct
+h07      schema error -> correct
+h08      correct
+h09      correct
+h10      schema error -> correct
+h11      correct
+h12      correct
+h13      correct
+h14      correct
+h15      schema error -> correct
+h16      correct
+h17      correct
+h18      correct
+h19      correct
+h20      correct
+
+chicago: 55 questions, providers offline, 0.6s
+accuracy at 1 attempt 0.764, at 3 attempts 1.000
+13 questions retried
+outcome               first attempt  final
+correct                          42     55
+schema error                     13      0
+group                   n  acc@1  acc@3
+easy                   15  0.533  1.000
+hard                   20  0.750  1.000
+medium                 20  0.950  1.000
+per question: 3593 input + 66 output tokens, $0.0000; total $0.0000

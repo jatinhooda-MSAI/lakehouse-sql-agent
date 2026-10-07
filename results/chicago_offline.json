@@ -1,0 +1,1235 @@
+{
+ "summary": {
+  "set": "chicago",
+  "providers": "offline",
+  "questions": 55,
+  "accuracy_at_1": 0.764,
+  "accuracy_at_3": 1.0,
+  "retried": 13,
+  "outcomes_first_attempt": {
+   "correct": 42,
+   "schema error": 13
+  },
+  "outcomes_final": {
+   "correct": 55
+  },
+  "by_group": {
+   "easy": {
+    "questions": 15,
+    "accuracy_at_1": 0.533,
+    "accuracy_at_3": 1.0
+   },
+   "hard": {
+    "questions": 20,
+    "accuracy_at_1": 0.75,
+    "accuracy_at_3": 1.0
+   },
+   "medium": {
+    "questions": 20,
+    "accuracy_at_1": 0.95,
+    "accuracy_at_3": 1.0
+   }
+  },
+  "mean_input_tokens": 3593,
+  "mean_output_tokens": 66,
+  "mean_cost_usd": 0.0,
+  "total_cost_usd": 0.0,
+  "seconds": 0.6
+ },
+ "questions": [
+  {
+   "id": "e01",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2866,
+   "output_tokens": 33,
+   "cost_usd": 0.0,
+   "seconds": 0.024,
+   "question": "How many crime incidents occurred in March 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents) FROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2026-03-01' AND crime_date < DATE '2026-04-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e02",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5849,
+   "output_tokens": 82,
+   "cost_usd": 0.0,
+   "seconds": 0.011,
+   "question": "How many homicides occurred in 2025?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents) FROM gold.fct_crimes_daily\nWHERE primary_type = 'HOMICIDE'\n  AND crime_date_x >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'",
+    "SELECT SUM(incidents) FROM gold.fct_crimes_daily\nWHERE primary_type = 'HOMICIDE'\n  AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"crime_date_x\" not found in FROM clause!\nCandidate bindings: \"crime_date\", \"primary_type\", \"community_area\", \"domestic_incidents\", \"arrests\"\n\nLINE 3:   AND crime_date_x >= DATE '2025-01-01' AND crime_date < DATE...\n              ^",
+    null
+   ]
+  },
+  {
+   "id": "e03",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5863,
+   "output_tokens": 65,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "How many arrests were made for crimes that occurred in August 2026?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(arrests_x) FROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2026-08-01' AND crime_date < DATE '2026-09-01'",
+    "SELECT SUM(arrests) FROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2026-08-01' AND crime_date < DATE '2026-09-01'"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"arrests_x\" not found in FROM clause!\nCandidate bindings: \"arrests\", \"domestic_incidents\", \"incidents\", \"crime_date\", \"primary_type\"\n\nLINE 1: EXPLAIN (FORMAT JSON) SELECT SUM(arrests_x) FROM gold.fct_crimes_daily\n                                         ^",
+    null
+   ]
+  },
+  {
+   "id": "e04",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2867,
+   "output_tokens": 35,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "How many domestic incidents were recorded in 2025?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(domestic_incidents) FROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e05",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5857,
+   "output_tokens": 40,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "How many community areas does Chicago have, not counting the unknown area?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT(*) FROM gold.dim_community_area WHERE community_area_x <> 0",
+    "SELECT COUNT(*) FROM gold.dim_community_area WHERE community_area <> 0"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"community_area_x\" not found in FROM clause!\nCandidate bindings: \"community_area\", \"community_area_name\"\n\nLINE 1: ... JSON) SELECT COUNT(*) FROM gold.dim_community_area WHERE community_area_x <> 0\n                                                                     ^",
+    null
+   ]
+  },
+  {
+   "id": "e06",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5848,
+   "output_tokens": 46,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "What is the name of community area number 32?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT community_area_name FROM gold.dim_community_area WHERE community_area_x = 32",
+    "SELECT community_area_name FROM gold.dim_community_area WHERE community_area = 32"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"community_area_x\" not found in FROM clause!\nCandidate bindings: \"community_area\", \"community_area_name\"\n\nLINE 1: ... SELECT community_area_name FROM gold.dim_community_area WHERE community_area_x = 32\n                                                                          ^",
+    null
+   ]
+  },
+  {
+   "id": "e07",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5847,
+   "output_tokens": 61,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "How many thefts occurred on July 4, 2026?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents_x) FROM gold.fct_crimes_daily\nWHERE primary_type = 'THEFT' AND crime_date = DATE '2026-07-04'",
+    "SELECT SUM(incidents) FROM gold.fct_crimes_daily\nWHERE primary_type = 'THEFT' AND crime_date = DATE '2026-07-04'"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"incidents_x\" not found in FROM clause!\nCandidate bindings: \"incidents\", \"domestic_incidents\", \"crime_date\", \"community_area\"\n\nLINE 1: EXPLAIN (FORMAT JSON) SELECT SUM(incidents_x) FROM gold.fct_crimes_daily\n                                         ^",
+    null
+   ]
+  },
+  {
+   "id": "e08",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2870,
+   "output_tokens": 35,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "How many non-duplicate 311 requests were opened in June 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(requests_opened) FROM gold.fct_311_daily\nWHERE activity_date >= DATE '2026-06-01' AND activity_date < DATE '2026-07-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e09",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5863,
+   "output_tokens": 93,
+   "cost_usd": 0.0,
+   "seconds": 0.006,
+   "question": "How many non-duplicate pothole in street complaints were opened in April 2026?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(requests_opened) FROM gold.fct_311_daily\nWHERE sr_type_x = 'Pothole in Street Complaint'\n  AND activity_date >= DATE '2026-04-01' AND activity_date < DATE '2026-05-01'",
+    "SELECT SUM(requests_opened) FROM gold.fct_311_daily\nWHERE sr_type = 'Pothole in Street Complaint'\n  AND activity_date >= DATE '2026-04-01' AND activity_date < DATE '2026-05-01'"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"sr_type_x\" not found in FROM clause!\nCandidate bindings: \"sr_type\", \"requests_opened\", \"activity_date\"\n\nLINE 2: WHERE sr_type_x = 'Pothole in Street Complaint'\n              ^",
+    null
+   ]
+  },
+  {
+   "id": "e10",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2869,
+   "output_tokens": 19,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "How many 311 service request records have the status Open?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT(*) FROM silver.stg_311_requests WHERE status = 'Open'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e11",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2874,
+   "output_tokens": 35,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "How many non-duplicate 311 requests were closed from January through March 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(requests_closed) FROM gold.fct_311_daily\nWHERE activity_date >= DATE '2026-01-01' AND activity_date < DATE '2026-04-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e12",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2868,
+   "output_tokens": 24,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "How many crime incidents occurred on January 1, 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents) FROM gold.fct_crimes_daily WHERE crime_date = DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e13",
+   "group": "easy",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5862,
+   "output_tokens": 73,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "How many distinct primary crime types were recorded in September 2026?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT(DISTINCT primary_type) FROM gold.fct_crimes_daily\nWHERE crime_date_x >= DATE '2026-09-01' AND crime_date < DATE '2026-10-01'",
+    "SELECT COUNT(DISTINCT primary_type) FROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2026-09-01' AND crime_date < DATE '2026-10-01'"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"crime_date_x\" not found in FROM clause!\nCandidate bindings: \"crime_date\", \"primary_type\", \"community_area\", \"domestic_incidents\", \"arrests\"\n\nLINE 2: WHERE crime_date_x >= DATE '2026-09-01' AND crime_date < DATE...\n              ^",
+    null
+   ]
+  },
+  {
+   "id": "e14",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2873,
+   "output_tokens": 68,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "How many motor vehicle thefts occurred in the Loop community area in 2025?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(f.incidents)\nFROM gold.fct_crimes_daily f\nJOIN gold.dim_community_area d USING (community_area)\nWHERE d.community_area_name = 'LOOP' AND f.primary_type = 'MOTOR VEHICLE THEFT'\n  AND f.crime_date >= DATE '2025-01-01' AND f.crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "e15",
+   "group": "easy",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2875,
+   "output_tokens": 41,
+   "cost_usd": 0.0,
+   "seconds": 0.009,
+   "question": "How many 311 requests created in 2025 came in by phone call, counting duplicates?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT(*) FROM silver.stg_311_requests\nWHERE origin = 'Phone Call'\n  AND created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m01",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2878,
+   "output_tokens": 53,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "Which primary crime type had the most incidents in 2025? Return the type and its incident count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT primary_type, SUM(incidents) AS incidents\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\nGROUP BY primary_type\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m02",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2885,
+   "output_tokens": 73,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "Which 5 community areas had the most crime incidents in July 2026? Return the community area name and the incident count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT d.community_area_name, SUM(f.incidents) AS incidents\nFROM gold.fct_crimes_daily f\nJOIN gold.dim_community_area d USING (community_area)\nWHERE f.crime_date >= DATE '2026-07-01' AND f.crime_date < DATE '2026-08-01'\nGROUP BY d.community_area_name\nORDER BY incidents DESC\nLIMIT 5"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m03",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2886,
+   "output_tokens": 42,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What were the total crime incidents in each month from January to June 2026? Return the first day of the month and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT month, SUM(incidents) AS incidents\nFROM gold.mart_area_month\nWHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-06-01'\nGROUP BY month\nORDER BY month"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m04",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2874,
+   "output_tokens": 52,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Which date in 2025 had the most crime incidents? Return the date and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT crime_date, SUM(incidents) AS incidents\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\nGROUP BY crime_date\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m05",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2870,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What fraction of narcotics incidents in 2025 led to an arrest?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(arrests) / SUM(incidents)\nFROM gold.fct_crimes_daily\nWHERE primary_type = 'NARCOTICS'\n  AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m06",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2882,
+   "output_tokens": 56,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Which 311 request type had the most non-duplicate requests opened in May 2026? Return the type and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT sr_type, SUM(requests_opened) AS requests_opened\nFROM gold.fct_311_daily\nWHERE activity_date >= DATE '2026-05-01' AND activity_date < DATE '2026-06-01'\nGROUP BY sr_type\nORDER BY requests_opened DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m07",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2872,
+   "output_tokens": 52,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What was the average number of crime incidents per day in February 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT AVG(daily)\nFROM (\n  SELECT crime_date, SUM(incidents) AS daily\n  FROM gold.fct_crimes_daily\n  WHERE crime_date >= DATE '2026-02-01' AND crime_date < DATE '2026-03-01'\n  GROUP BY crime_date\n)"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m08",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2868,
+   "output_tokens": 39,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What fraction of crime incidents in 2025 were domestic?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(domestic_incidents) / SUM(incidents)\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m09",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2881,
+   "output_tokens": 51,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "Which police district had the most crime incidents that occurred in 2025? Return the district and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT district, COUNT(*) AS incidents\nFROM silver.stg_crimes\nWHERE occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'\nGROUP BY district\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m10",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2881,
+   "output_tokens": 63,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "Which 5 location descriptions had the most thefts in 2025? Return the location description and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT location_description, COUNT(*) AS thefts\nFROM silver.stg_crimes\nWHERE primary_type = 'THEFT'\n  AND occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'\nGROUP BY location_description\nORDER BY thefts DESC\nLIMIT 5"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m11",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2884,
+   "output_tokens": 62,
+   "cost_usd": 0.0,
+   "seconds": 0.006,
+   "question": "Which city department owned the most non-duplicate 311 requests created in 2025? Return the department and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT owner_department, COUNT(*) AS requests\nFROM silver.stg_311_requests\nWHERE NOT is_duplicate\n  AND created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'\nGROUP BY owner_department\nORDER BY requests DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m12",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2872,
+   "output_tokens": 39,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "How many crime incidents occurred in the Austin community area in 2025?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents)\nFROM gold.mart_area_month\nWHERE community_area_name = 'AUSTIN'\n  AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m13",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2879,
+   "output_tokens": 62,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "How many community areas, excluding the unknown area, had more than 5,000 crime incidents in 2025?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT(*)\nFROM (\n  SELECT community_area\n  FROM gold.fct_crimes_daily\n  WHERE community_area <> 0\n    AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\n  GROUP BY community_area\n  HAVING SUM(incidents) > 5000\n)"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m14",
+   "group": "medium",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5862,
+   "output_tokens": 109,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "Which day of the week had the most crime incidents in 2025? Return the day name and the count.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT dayname(crime_date) AS day_x, SUM(incidents) AS incidents\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\nGROUP BY day\nORDER BY incidents DESC\nLIMIT 1",
+    "SELECT dayname(crime_date) AS day, SUM(incidents) AS incidents\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\nGROUP BY day\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"day\" not found in FROM clause!\nCandidate bindings: \"primary_type\"\n\nLINE 4: GROUP BY day\n                 ^",
+    null
+   ]
+  },
+  {
+   "id": "m15",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2883,
+   "output_tokens": 53,
+   "cost_usd": 0.0,
+   "seconds": 0.008,
+   "question": "What was the median number of days to close non-duplicate graffiti removal requests that were closed in March 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT MEDIAN(days_to_close)\nFROM silver.stg_311_requests\nWHERE sr_type = 'Graffiti Removal Request' AND NOT is_duplicate\n  AND closed_at >= TIMESTAMP '2026-03-01' AND closed_at < TIMESTAMP '2026-04-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m16",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2872,
+   "output_tokens": 44,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "What fraction of 311 requests created in 2025 were marked as duplicates?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT AVG(CASE WHEN is_duplicate THEN 1.0 ELSE 0.0 END)\nFROM silver.stg_311_requests\nWHERE created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m17",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2879,
+   "output_tokens": 58,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Which hour of the day (0 to 23) had the most crime incidents in 2025? Return the hour and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT EXTRACT(hour FROM occurred_at) AS hour, COUNT(*) AS incidents\nFROM silver.stg_crimes\nWHERE occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'\nGROUP BY hour\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m18",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2884,
+   "output_tokens": 51,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "In which month of 2025 were the most non-duplicate 311 requests opened? Return the first day of the month and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT month, SUM(requests_opened) AS requests_opened\nFROM gold.mart_area_month\nWHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nGROUP BY month\nORDER BY requests_opened DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m19",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2869,
+   "output_tokens": 44,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "On how many days in 2025 was at least one homicide recorded?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT(DISTINCT crime_date)\nFROM gold.fct_crimes_daily\nWHERE primary_type = 'HOMICIDE'\n  AND crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "m20",
+   "group": "medium",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2891,
+   "output_tokens": 90,
+   "cost_usd": 0.0,
+   "seconds": 0.006,
+   "question": "Which 3 community areas had the most non-duplicate rodent baiting or rat complaints opened in 2025? Return the community area name and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT d.community_area_name, SUM(f.requests_opened) AS requests_opened\nFROM gold.fct_311_daily f\nJOIN gold.dim_community_area d USING (community_area)\nWHERE f.sr_type = 'Rodent Baiting/Rat Complaint'\n  AND f.activity_date >= DATE '2025-01-01' AND f.activity_date < DATE '2026-01-01'\nGROUP BY d.community_area_name\nORDER BY requests_opened DESC\nLIMIT 3"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h01",
+   "group": "hard",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5942,
+   "output_tokens": 106,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "For each month of 2025, what were the citywide crime incidents and non-duplicate 311 requests opened? Return the first day of the month, incidents and requests opened.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT month_x, SUM(incidents) AS incidents, SUM(requests_opened) AS requests_opened\nFROM gold.mart_area_month\nWHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nGROUP BY month\nORDER BY month",
+    "SELECT month, SUM(incidents) AS incidents, SUM(requests_opened) AS requests_opened\nFROM gold.mart_area_month\nWHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nGROUP BY month\nORDER BY month"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"month_x\" not found in FROM clause!\nCandidate bindings: \"month\", \"community_area\", \"community_area_name\", \"domestic_incidents\", \"median_days_to_close\"\n\nLINE 1: EXPLAIN (FORMAT JSON) SELECT month_x, SUM(incidents) AS incidents, SUM(requests_opened...\n                                     ^",
+    null
+   ]
+  },
+  {
+   "id": "h02",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2900,
+   "output_tokens": 75,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Across the 77 community areas, excluding the unknown area, what is the Pearson correlation between total crime incidents in 2025 and total non-duplicate 311 requests opened in 2025?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT CORR(incidents, requests_opened)\nFROM (\n  SELECT community_area, SUM(incidents) AS incidents, SUM(requests_opened) AS requests_opened\n  FROM gold.mart_area_month\n  WHERE community_area <> 0\n    AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\n  GROUP BY community_area\n)"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h03",
+   "group": "hard",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5975,
+   "output_tokens": 185,
+   "cost_usd": 0.0,
+   "seconds": 0.008,
+   "question": "For each month from February to August 2026, what were the total crime incidents and the change from the previous month? Return the first day of the month, the incidents and the change.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "WITH monthly AS (\n  SELECT month_x, SUM(incidents) AS incidents\n  FROM gold.mart_area_month\n  WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-08-01'\n  GROUP BY month\n)\nSELECT month, incidents, change\nFROM (\n  SELECT month, incidents, incidents - LAG(incidents) OVER (ORDER BY month) AS change\n  FROM monthly\n)\nWHERE month >= DATE '2026-02-01'\nORDER BY month",
+    "WITH monthly AS (\n  SELECT month, SUM(incidents) AS incidents\n  FROM gold.mart_area_month\n  WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-08-01'\n  GROUP BY month\n)\nSELECT month, incidents, change\nFROM (\n  SELECT month, incidents, incidents - LAG(incidents) OVER (ORDER BY month) AS change\n  FROM monthly\n)\nWHERE month >= DATE '2026-02-01'\nORDER BY month"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"month_x\" not found in FROM clause!\nCandidate bindings: \"month\", \"community_area\", \"community_area_name\", \"domestic_incidents\", \"median_days_to_close\"\n\nLINE 2:   SELECT month_x, SUM(incidents) AS incidents\n                 ^",
+    null
+   ]
+  },
+  {
+   "id": "h04",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2900,
+   "output_tokens": 137,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "For the Austin, Loop and Near North Side community areas, what was the most common primary crime type in 2025? Return the community area name, the crime type and its incident count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "WITH by_type AS (\n  SELECT d.community_area_name, f.primary_type, SUM(f.incidents) AS incidents\n  FROM gold.fct_crimes_daily f\n  JOIN gold.dim_community_area d USING (community_area)\n  WHERE d.community_area_name IN ('AUSTIN', 'LOOP', 'NEAR NORTH SIDE')\n    AND f.crime_date >= DATE '2025-01-01' AND f.crime_date < DATE '2026-01-01'\n  GROUP BY d.community_area_name, f.primary_type\n)\nSELECT community_area_name, primary_type, incidents\nFROM by_type\nQUALIFY ROW_NUMBER() OVER (PARTITION BY community_area_name ORDER BY incidents DESC) = 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h05",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2881,
+   "output_tokens": 32,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What was the average daily number of crime incidents over the seven days from July 4 through July 10, 2026?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents) / 7.0\nFROM gold.fct_crimes_daily\nWHERE crime_date BETWEEN DATE '2026-07-04' AND DATE '2026-07-10'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h06",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2901,
+   "output_tokens": 64,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Which 5 community areas, excluding the unknown area, had the highest ratio of non-duplicate 311 requests opened to crime incidents in 2025? Return the community area name and the ratio.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT community_area_name, SUM(requests_opened) / SUM(incidents) AS ratio\nFROM gold.mart_area_month\nWHERE community_area <> 0\n  AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nGROUP BY community_area_name\nORDER BY ratio DESC\nLIMIT 5"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h07",
+   "group": "hard",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5995,
+   "output_tokens": 214,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "Which community area had the largest increase in crime incidents from January-June 2025 to January-June 2026? Return the community area name and the increase.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "WITH halves AS (\n  SELECT community_area_name,\n         SUM(incidents) FILTER (WHERE month_x BETWEEN DATE '2025-01-01' AND DATE '2025-06-01') AS h1_2025,\n         SUM(incidents) FILTER (WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-06-01') AS h1_2026\n  FROM gold.mart_area_month\n  GROUP BY community_area_name\n)\nSELECT community_area_name, h1_2026 - h1_2025 AS increase\nFROM halves\nORDER BY increase DESC\nLIMIT 1",
+    "WITH halves AS (\n  SELECT community_area_name,\n         SUM(incidents) FILTER (WHERE month BETWEEN DATE '2025-01-01' AND DATE '2025-06-01') AS h1_2025,\n         SUM(incidents) FILTER (WHERE month BETWEEN DATE '2026-01-01' AND DATE '2026-06-01') AS h1_2026\n  FROM gold.mart_area_month\n  GROUP BY community_area_name\n)\nSELECT community_area_name, h1_2026 - h1_2025 AS increase\nFROM halves\nORDER BY increase DESC\nLIMIT 1"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"month_x\" not found in FROM clause!\nCandidate bindings: \"month\", \"community_area\", \"community_area_name\", \"domestic_incidents\", \"median_days_to_close\"\n\nLINE 3:          SUM(incidents) FILTER (WHERE month_x BETWEEN DATE '2025-01-01' AND DATE '2025-06-01'...\n                                              ^",
+    null
+   ]
+  },
+  {
+   "id": "h08",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2900,
+   "output_tokens": 61,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "For each month of 2025, give the crime incidents and the running total of incidents since January 2025. Return the first day of the month, the monthly incidents and the running total.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT month,\n       SUM(incidents) AS incidents,\n       SUM(SUM(incidents)) OVER (ORDER BY month) AS running_total\nFROM gold.mart_area_month\nWHERE month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nGROUP BY month\nORDER BY month"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h09",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2883,
+   "output_tokens": 64,
+   "cost_usd": 0.0,
+   "seconds": 0.006,
+   "question": "Compare total crime incidents from January 1 through August 31 in 2025 and in 2026. Return the year and the total.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT YEAR(crime_date) AS year, SUM(incidents) AS incidents\nFROM gold.fct_crimes_daily\nWHERE crime_date BETWEEN DATE '2025-01-01' AND DATE '2025-08-31'\n   OR crime_date BETWEEN DATE '2026-01-01' AND DATE '2026-08-31'\nGROUP BY year\nORDER BY year"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h10",
+   "group": "hard",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5917,
+   "output_tokens": 88,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "What was the arrest rate (arrests divided by incidents) in the Austin community area for each month of 2025? Return the first day of the month and the rate.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT month_x, arrest_rate\nFROM gold.mart_area_month\nWHERE community_area_name = 'AUSTIN'\n  AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nORDER BY month",
+    "SELECT month, arrest_rate\nFROM gold.mart_area_month\nWHERE community_area_name = 'AUSTIN'\n  AND month >= DATE '2025-01-01' AND month < DATE '2026-01-01'\nORDER BY month"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"month_x\" not found in FROM clause!\nCandidate bindings: \"month\", \"community_area\", \"community_area_name\", \"domestic_incidents\", \"median_days_to_close\"\n\nLINE 1: EXPLAIN (FORMAT JSON) SELECT month_x, arrest_rate\n                                     ^",
+    null
+   ]
+  },
+  {
+   "id": "h11",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2893,
+   "output_tokens": 67,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Among primary crime types with at least 500 incidents in 2025, which had the highest fraction of incidents with an arrest? Return the type and the fraction.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT primary_type, SUM(arrests) / SUM(incidents) AS arrest_fraction\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\nGROUP BY primary_type\nHAVING SUM(incidents) >= 500\nORDER BY arrest_fraction DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h12",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2870,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "What fraction of crime incidents in 2025 had no community area?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT SUM(incidents) FILTER (WHERE community_area = 0) / SUM(incidents)\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h13",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2894,
+   "output_tokens": 101,
+   "cost_usd": 0.0,
+   "seconds": 0.013,
+   "question": "For each 311 owner department, which request type had the most non-duplicate requests created in 2025? Return the department, the request type and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "WITH by_type AS (\n  SELECT owner_department, sr_type, COUNT(*) AS requests\n  FROM silver.stg_311_requests\n  WHERE NOT is_duplicate\n    AND created_at >= TIMESTAMP '2025-01-01' AND created_at < TIMESTAMP '2026-01-01'\n  GROUP BY owner_department, sr_type\n)\nSELECT owner_department, sr_type, requests\nFROM by_type\nQUALIFY ROW_NUMBER() OVER (PARTITION BY owner_department ORDER BY requests DESC) = 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h14",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2885,
+   "output_tokens": 36,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "In July 2026, what was the ratio of non-duplicate 311 requests opened to crime incidents in the Lincoln Park community area?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT requests_opened / incidents\nFROM gold.mart_area_month\nWHERE community_area_name = 'LINCOLN PARK' AND month = DATE '2026-07-01'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h15",
+   "group": "hard",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 5906,
+   "output_tokens": 141,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "On how many days in 2025 was the daily number of crime incidents above the 2025 daily average?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "WITH daily AS (\n  SELECT crime_date_x, SUM(incidents) AS incidents\n  FROM gold.fct_crimes_daily\n  WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\n  GROUP BY crime_date\n)\nSELECT COUNT(*) FROM daily WHERE incidents > (SELECT AVG(incidents) FROM daily)",
+    "WITH daily AS (\n  SELECT crime_date, SUM(incidents) AS incidents\n  FROM gold.fct_crimes_daily\n  WHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\n  GROUP BY crime_date\n)\nSELECT COUNT(*) FROM daily WHERE incidents > (SELECT AVG(incidents) FROM daily)"
+   ],
+   "errors": [
+    "Binder Error: Referenced column \"crime_date_x\" not found in FROM clause!\nCandidate bindings: \"crime_date\", \"primary_type\", \"community_area\", \"domestic_incidents\", \"arrests\"\n\nLINE 2:   SELECT crime_date_x, SUM(incidents) AS incidents\n                 ^",
+    null
+   ]
+  },
+  {
+   "id": "h16",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2902,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Among community areas with at least 500 non-duplicate 311 requests closed in March 2026, which had the lowest median days to close that month? Return the community area name and the median.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT community_area_name, median_days_to_close\nFROM gold.mart_area_month\nWHERE month = DATE '2026-03-01' AND requests_closed >= 500\nORDER BY median_days_to_close\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h17",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2888,
+   "output_tokens": 60,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Which week of 2025, with weeks starting on Monday, had the most crime incidents? Return the Monday that starts the week and the count.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT date_trunc('week', crime_date) AS week_start, SUM(incidents) AS incidents\nFROM gold.fct_crimes_daily\nWHERE crime_date >= DATE '2025-01-01' AND crime_date < DATE '2026-01-01'\nGROUP BY week_start\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h18",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2898,
+   "output_tokens": 125,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "For each day from March 1 to March 7, 2026, what were the citywide crime incidents and the non-duplicate 311 requests opened? Return the date, incidents and requests opened.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "WITH crimes AS (\n  SELECT crime_date AS day, SUM(incidents) AS incidents\n  FROM gold.fct_crimes_daily\n  WHERE crime_date BETWEEN DATE '2026-03-01' AND DATE '2026-03-07'\n  GROUP BY crime_date\n),\nrequests AS (\n  SELECT activity_date AS day, SUM(requests_opened) AS requests_opened\n  FROM gold.fct_311_daily\n  WHERE activity_date BETWEEN DATE '2026-03-01' AND DATE '2026-03-07'\n  GROUP BY activity_date\n)\nSELECT day, incidents, requests_opened\nFROM crimes JOIN requests USING (day)\nORDER BY day"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h19",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2900,
+   "output_tokens": 69,
+   "cost_usd": 0.0,
+   "seconds": 0.008,
+   "question": "Among police districts with at least 1,000 crime incidents that occurred in 2025, which 3 had the highest fraction of incidents with an arrest? Return the district and the fraction.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT district, AVG(CASE WHEN arrest THEN 1.0 ELSE 0.0 END) AS arrest_fraction\nFROM silver.stg_crimes\nWHERE occurred_at >= TIMESTAMP '2025-01-01' AND occurred_at < TIMESTAMP '2026-01-01'\nGROUP BY district\nHAVING COUNT(*) >= 1000\nORDER BY arrest_fraction DESC\nLIMIT 3"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "h20",
+   "group": "hard",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2905,
+   "output_tokens": 38,
+   "cost_usd": 0.0,
+   "seconds": 0.006,
+   "question": "Which community area had the most crime incidents in June 2026, and how many non-duplicate 311 requests were opened there that month? Return the community area name, the incidents and the requests opened.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT community_area_name, incidents, requests_opened\nFROM gold.mart_area_month\nWHERE month = DATE '2026-06-01'\nORDER BY incidents DESC\nLIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  }
+ ]
+}

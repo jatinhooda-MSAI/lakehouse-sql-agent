@@ -1,0 +1,56 @@
+id,group,first,final,attempts,input_tokens,output_tokens,cost_usd,seconds
+e01,easy,correct,correct,1,2866,33,0.0,0.024
+e02,easy,schema error,correct,2,5849,82,0.0,0.011
+e03,easy,schema error,correct,2,5863,65,0.0,0.005
+e04,easy,correct,correct,1,2867,35,0.0,0.003
+e05,easy,schema error,correct,2,5857,40,0.0,0.004
+e06,easy,schema error,correct,2,5848,46,0.0,0.004
+e07,easy,schema error,correct,2,5847,61,0.0,0.005
+e08,easy,correct,correct,1,2870,35,0.0,0.003
+e09,easy,schema error,correct,2,5863,93,0.0,0.006
+e10,easy,correct,correct,1,2869,19,0.0,0.004
+e11,easy,correct,correct,1,2874,35,0.0,0.003
+e12,easy,correct,correct,1,2868,24,0.0,0.003
+e13,easy,schema error,correct,2,5862,73,0.0,0.005
+e14,easy,correct,correct,1,2873,68,0.0,0.004
+e15,easy,correct,correct,1,2875,41,0.0,0.009
+m01,medium,correct,correct,1,2878,53,0.0,0.007
+m02,medium,correct,correct,1,2885,73,0.0,0.005
+m03,medium,correct,correct,1,2886,42,0.0,0.003
+m04,medium,correct,correct,1,2874,52,0.0,0.004
+m05,medium,correct,correct,1,2870,45,0.0,0.003
+m06,medium,correct,correct,1,2882,56,0.0,0.004
+m07,medium,correct,correct,1,2872,52,0.0,0.003
+m08,medium,correct,correct,1,2868,39,0.0,0.003
+m09,medium,correct,correct,1,2881,51,0.0,0.005
+m10,medium,correct,correct,1,2881,63,0.0,0.007
+m11,medium,correct,correct,1,2884,62,0.0,0.006
+m12,medium,correct,correct,1,2872,39,0.0,0.003
+m13,medium,correct,correct,1,2879,62,0.0,0.004
+m14,medium,schema error,correct,2,5862,109,0.0,0.007
+m15,medium,correct,correct,1,2883,53,0.0,0.008
+m16,medium,correct,correct,1,2872,44,0.0,0.005
+m17,medium,correct,correct,1,2879,58,0.0,0.004
+m18,medium,correct,correct,1,2884,51,0.0,0.003
+m19,medium,correct,correct,1,2869,44,0.0,0.003
+m20,medium,correct,correct,1,2891,90,0.0,0.006
+h01,hard,schema error,correct,2,5942,106,0.0,0.005
+h02,hard,correct,correct,1,2900,75,0.0,0.003
+h03,hard,schema error,correct,2,5975,185,0.0,0.008
+h04,hard,correct,correct,1,2900,137,0.0,0.007
+h05,hard,correct,correct,1,2881,32,0.0,0.003
+h06,hard,correct,correct,1,2901,64,0.0,0.003
+h07,hard,schema error,correct,2,5995,214,0.0,0.007
+h08,hard,correct,correct,1,2900,61,0.0,0.004
+h09,hard,correct,correct,1,2883,64,0.0,0.006
+h10,hard,schema error,correct,2,5917,88,0.0,0.005
+h11,hard,correct,correct,1,2893,67,0.0,0.004
+h12,hard,correct,correct,1,2870,45,0.0,0.004
+h13,hard,correct,correct,1,2894,101,0.0,0.013
+h14,hard,correct,correct,1,2885,36,0.0,0.003
+h15,hard,schema error,correct,2,5906,141,0.0,0.007
+h16,hard,correct,correct,1,2902,45,0.0,0.003
+h17,hard,correct,correct,1,2888,60,0.0,0.004
+h18,hard,correct,correct,1,2898,125,0.0,0.005
+h19,hard,correct,correct,1,2900,69,0.0,0.008
+h20,hard,correct,correct,1,2905,38,0.0,0.006

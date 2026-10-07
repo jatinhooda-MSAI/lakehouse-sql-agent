@@ -1,0 +1,2241 @@
+{
+ "summary": {
+  "set": "spider",
+  "providers": "offline",
+  "questions": 100,
+  "accuracy_at_1": 0.7,
+  "accuracy_at_3": 1.0,
+  "retried": 30,
+  "outcomes_first_attempt": {
+   "correct": 70,
+   "schema error": 30
+  },
+  "outcomes_final": {
+   "correct": 100
+  },
+  "by_group": {
+   "car_1": {
+    "questions": 20,
+    "accuracy_at_1": 0.6,
+    "accuracy_at_3": 1.0
+   },
+   "concert_singer": {
+    "questions": 20,
+    "accuracy_at_1": 0.65,
+    "accuracy_at_3": 1.0
+   },
+   "dog_kennels": {
+    "questions": 20,
+    "accuracy_at_1": 0.55,
+    "accuracy_at_3": 1.0
+   },
+   "pets_1": {
+    "questions": 20,
+    "accuracy_at_1": 0.85,
+    "accuracy_at_3": 1.0
+   },
+   "world_1": {
+    "questions": 20,
+    "accuracy_at_1": 0.85,
+    "accuracy_at_3": 1.0
+   }
+  },
+  "mean_input_tokens": 1198,
+  "mean_output_tokens": 43,
+  "mean_cost_usd": 0.0,
+  "total_cost_usd": 0.0,
+  "seconds": 0.3
+ },
+ "questions": [
+  {
+   "id": "dev0092",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1478,
+   "output_tokens": 21,
+   "cost_usd": 0.0,
+   "seconds": 0.02,
+   "question": "How many countries exist?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM COUNTRIES_x;",
+    "SELECT count(*) FROM COUNTRIES;"
+   ],
+   "errors": [
+    "no such table: COUNTRIES_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0099",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 734,
+   "output_tokens": 54,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Find the name of the makers that produced some cars in the year of 1970?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0104",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1529,
+   "output_tokens": 85,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What are the different models for the cards produced after 1980?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model  =  T2.model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.id_x WHERE T3.year  >  1980;",
+    "SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model  =  T2.model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.id WHERE T3.year  >  1980;"
+   ],
+   "errors": [
+    "no such column: T3.id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0114",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 728,
+   "output_tokens": 33,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the number of makers of care in France?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'france';"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0119",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1513,
+   "output_tokens": 42,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the smallest weight of the car produced with 8 cylinders on 1974 ?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "select min(weight) from cars_data where cylinders  =  8 and year_x  =  1974",
+    "select min(weight) from cars_data where cylinders  =  8 and year  =  1974"
+   ],
+   "errors": [
+    "no such column: year_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0120",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 734,
+   "output_tokens": 21,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the minimum weight of the car with 8 cylinders produced in 1974 ?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select min(weight) from cars_data where cylinders  =  8 and year  =  1974"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0123",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 734,
+   "output_tokens": 42,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What are the countries having at least one car maker? List name and id.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.CountryName ,  T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.CountryId HAVING count(*)  >=  1;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0125",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 731,
+   "output_tokens": 16,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the number of the cars with horsepower more than 150?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM CARS_DATA WHERE horsepower  >  150;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0132",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 739,
+   "output_tokens": 42,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the largest amount of horsepower for the models with 3 cylinders and what make is it?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.horsepower ,  T1.Make FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.cylinders  =  3 ORDER BY T2.horsepower DESC LIMIT 1;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0136",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1505,
+   "output_tokens": 34,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the average horsepower for all cars produced before 1980 ?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "select avg(horsepower) from cars_data where year_x  <  1980;",
+    "select avg(horsepower) from cars_data where year  <  1980;"
+   ],
+   "errors": [
+    "no such column: year_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0138",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 727,
+   "output_tokens": 31,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the average edispl for all volvos?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT avg(T2.edispl) FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.Model  =  'volvo';"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0140",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 732,
+   "output_tokens": 20,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the maximum accelerate for all the different cylinders?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT max(Accelerate) ,  Cylinders FROM CARS_DATA GROUP BY Cylinders;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0148",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 736,
+   "output_tokens": 35,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the number of car models created by the car maker American Motor Company?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker WHERE T1.FullName  =  'American Motor Company';"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0149",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1526,
+   "output_tokens": 71,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Which makers designed more than 3 car models? List full name and the id.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.FullName ,  T1.Id_x FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
+    "SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;"
+   ],
+   "errors": [
+    "no such column: T1.Id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0151",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 743,
+   "output_tokens": 63,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Which distinctive models are produced by maker with the full name General Motors or weighing more than 3500?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T3.FullName  =  'General Motors' OR T4.weight  >  3500;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0152",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 742,
+   "output_tokens": 63,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the different models created by either the car maker General Motors or weighed more than 3500?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T2.Model FROM CAR_NAMES AS T1 JOIN MODEL_LIST AS T2 ON T1.Model  =  T2.Model JOIN CAR_MAKERS AS T3 ON T2.Maker  =  T3.Id JOIN CARS_DATA AS T4 ON T1.MakeId  =  T4.Id WHERE T3.FullName  =  'General Motors' OR T4.weight  >  3500;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0155",
+   "group": "car_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 732,
+   "output_tokens": 22,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the horsepower of the car with the largest accelerate?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1;"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0161",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1515,
+   "output_tokens": 72,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "How many countries has more than 2 car makers ?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country_x group by t1.countryid having count(*)  >  2",
+    "select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2"
+   ],
+   "errors": [
+    "no such column: t2.country_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0166",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1527,
+   "output_tokens": 76,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "For all of the 4 cylinder cars, which model has the most horsepower?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id_x WHERE T2.Cylinders  =  4 ORDER BY T2.horsepower DESC LIMIT 1;",
+    "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Cylinders  =  4 ORDER BY T2.horsepower DESC LIMIT 1;"
+   ],
+   "errors": [
+    "no such column: T2.Id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0177",
+   "group": "car_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1597,
+   "output_tokens": 177,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "What are the id and names of the countries which have more than 3 car makers or produce the 'fiat' model?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country_x GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';",
+    "SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';"
+   ],
+   "errors": [
+    "no such column: T2.Country_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0002",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 484,
+   "output_tokens": 17,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Show name, country, age for all singers ordered by age from the oldest to the youngest.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT name ,  country ,  age FROM singer ORDER BY age DESC"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0003",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1006,
+   "output_tokens": 35,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What are the names, countries, and ages for every singer in descending order of age?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT name_x ,  country ,  age FROM singer ORDER BY age DESC",
+    "SELECT name ,  country ,  age FROM singer ORDER BY age DESC"
+   ],
+   "errors": [
+    "no such column: name_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0004",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1007,
+   "output_tokens": 44,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the average, minimum, and maximum age of all singers from France?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country_x  =  'France'",
+    "SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'"
+   ],
+   "errors": [
+    "no such column: country_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0008",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 479,
+   "output_tokens": 15,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are all distinct countries where singers above age 20 are from?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT country FROM singer WHERE age  >  20"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0013",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 479,
+   "output_tokens": 20,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are all the song names by singers who are older than average?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0016",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 992,
+   "output_tokens": 26,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the maximum capacity and the average of all stadiums ?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "select max(capacity_x), average from stadium",
+    "select max(capacity), average from stadium"
+   ],
+   "errors": [
+    "no such column: capacity_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0018",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1005,
+   "output_tokens": 38,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What is the name and capacity for the stadium with highest average attendance?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT name_x ,  capacity FROM stadium ORDER BY average DESC LIMIT 1",
+    "SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1"
+   ],
+   "errors": [
+    "no such column: name_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0019",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1008,
+   "output_tokens": 38,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the name and capacity for the stadium with the highest average attendance?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT name ,  capacity FROM stadium ORDER BY average_x DESC LIMIT 1",
+    "SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1"
+   ],
+   "errors": [
+    "no such column: average_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0022",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 479,
+   "output_tokens": 33,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Show the stadium name and the number of concerts in each stadium.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0024",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 484,
+   "output_tokens": 47,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Show the stadium name and capacity with most number of concerts in year 2014 or after.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0025",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 482,
+   "output_tokens": 47,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the name and capacity of the stadium with the most concerts after 2013 ?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0026",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 472,
+   "output_tokens": 20,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Which year has most number of concerts?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0030",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1011,
+   "output_tokens": 54,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Show countries where a singer above age 40 and a singer below 30 are from.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT country FROM singer WHERE age_x  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30",
+    "SELECT country FROM singer WHERE age  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30"
+   ],
+   "errors": [
+    "no such column: age_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0031",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 482,
+   "output_tokens": 38,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Show names for all stadiums except for stadiums having a concert in year 2014.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0032",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 480,
+   "output_tokens": 38,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the names of all stadiums that did not have a concert in 2014?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0033",
+   "group": "concert_singer",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1031,
+   "output_tokens": 81,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Show the name and theme for all concerts and the number of singers in each concert.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id_x  =  T2.concert_id GROUP BY T2.concert_id",
+    "SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id"
+   ],
+   "errors": [
+    "no such column: T1.concert_id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0037",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 474,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "List all singer names in concerts in year 2014.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0038",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 480,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the names of the singers who performed in a concert in 2014?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0040",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 488,
+   "output_tokens": 18,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0044",
+   "group": "concert_singer",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 484,
+   "output_tokens": 30,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the number of concerts that occurred in the stadium with the largest capacity ?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0923",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4201,
+   "output_tokens": 157,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Find the id, last name and cell phone of the professionals who live in the state of Indiana or have performed more than two treatments.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state_x  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2",
+    "SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2"
+   ],
+   "errors": [
+    "no such column: state_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0924",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2038,
+   "output_tokens": 35,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Which dogs have not cost their owner more than 1000 for treatment ? List the dog names .",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0930",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4139,
+   "output_tokens": 89,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "Which owner owns the most dogs? List the owner id, first name and last name.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.owner_id ,  T2.first_name_x ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",
+    "SELECT T1.owner_id ,  T2.first_name ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1"
+   ],
+   "errors": [
+    "no such column: T2.first_name_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0935",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4124,
+   "output_tokens": 77,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Which breed do the most dogs have? Give me the breed name.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.breed_name_x FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1",
+    "SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1"
+   ],
+   "errors": [
+    "no such column: T1.breed_name_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0936",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4157,
+   "output_tokens": 105,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Which owner has paid for the most treatments on his or her dogs? List the owner id and last name.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.owner_id_x ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",
+    "SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1"
+   ],
+   "errors": [
+    "no such column: T1.owner_id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0945",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2046,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Which professionals have operated a treatment that costs less than the average? Give me theor first names and last names.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.first_name ,  T1.last_name FROM Professionals AS T1 JOIN Treatments AS T2 WHERE cost_of_treatment  <  ( SELECT avg(cost_of_treatment) FROM Treatments )"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0950",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2034,
+   "output_tokens": 32,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "List each owner's first name, last name, and the size of his for her dog.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0951",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2034,
+   "output_tokens": 32,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are each owner's first name, last name, and the size of their dog?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0954",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4150,
+   "output_tokens": 110,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "List the names of the dogs of the rarest breed and the treatment dates of them.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.name_x ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )",
+    "SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )"
+   ],
+   "errors": [
+    "no such column: T1.name_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0956",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2042,
+   "output_tokens": 34,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Which dogs are owned by someone who lives in Virginia? List the owner's first name and the dog's name.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0957",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2036,
+   "output_tokens": 34,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the first names of owners living in Virginia and the names of dogs they own.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0963",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2042,
+   "output_tokens": 25,
+   "cost_usd": 0.0,
+   "seconds": 0.024,
+   "question": "What are the emails of the professionals living in either the state of Hawaii or the state of Wisconsin?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT email_address FROM Professionals WHERE state  =  'Hawaii' OR state  =  'Wisconsin'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0967",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2030,
+   "output_tokens": 14,
+   "cost_usd": 0.0,
+   "seconds": 0.006,
+   "question": "Count the number of dogs that went through a treatment.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(DISTINCT dog_id) FROM Treatments"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0969",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4103,
+   "output_tokens": 32,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "Find the number of professionals who have ever treated dogs.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(DISTINCT professional_id_x) FROM Treatments",
+    "SELECT count(DISTINCT professional_id) FROM Treatments"
+   ],
+   "errors": [
+    "no such column: professional_id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0971",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2044,
+   "output_tokens": 24,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Find the role, street, city and state of the professionals living in a city that contains the substring 'West'.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0979",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2032,
+   "output_tokens": 22,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Tell me the number of dogs that have not received any treatment .",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select count(*) from dogs where dog_id not in ( select dog_id from treatments )"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0980",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4102,
+   "output_tokens": 45,
+   "cost_usd": 0.0,
+   "seconds": 0.005,
+   "question": "How many owners temporarily do not have any dogs?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM Owners WHERE owner_id_x NOT IN ( SELECT owner_id FROM Dogs )",
+    "SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )"
+   ],
+   "errors": [
+    "no such column: owner_id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0982",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4116,
+   "output_tokens": 58,
+   "cost_usd": 0.0,
+   "seconds": 0.007,
+   "question": "How many professionals did not operate any treatment on dogs?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM Professionals WHERE professional_id_x NOT IN ( SELECT professional_id FROM Treatments )",
+    "SELECT count(*) FROM Professionals WHERE professional_id NOT IN ( SELECT professional_id FROM Treatments )"
+   ],
+   "errors": [
+    "no such column: professional_id_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0983",
+   "group": "dog_kennels",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 2032,
+   "output_tokens": 29,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Find the number of professionals who have not treated any dogs.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM Professionals WHERE professional_id NOT IN ( SELECT professional_id FROM Treatments )"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0987",
+   "group": "dog_kennels",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 4083,
+   "output_tokens": 18,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Compute the average age of all the dogs.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT avg(age_x) FROM Dogs",
+    "SELECT avg(age) FROM Dogs"
+   ],
+   "errors": [
+    "no such column: age_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0047",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 381,
+   "output_tokens": 14,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the weight of the youngest dog.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT weight FROM pets ORDER BY pet_age LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0048",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 381,
+   "output_tokens": 14,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "How much does the youngest dog weigh?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT weight FROM pets ORDER BY pet_age LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0049",
+   "group": "pets_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 825,
+   "output_tokens": 33,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the maximum weight for each type of pet. List the maximum weight and pet type.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT max(weight_x) ,  petType FROM pets GROUP BY petType",
+    "SELECT max(weight) ,  petType FROM pets GROUP BY petType"
+   ],
+   "errors": [
+    "no such column: weight_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0053",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 391,
+   "output_tokens": 44,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the number of dog pets that are raised by female students (with sex F).",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0054",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 384,
+   "output_tokens": 44,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "How many dog pets are raised by female students?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0058",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 390,
+   "output_tokens": 47,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the first names of every student who has a cat or dog as a pet?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0061",
+   "group": "pets_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 851,
+   "output_tokens": 105,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Find the major and age of students who do not have a cat pet.",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype_x  =  'cat')",
+    "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+   ],
+   "errors": [
+    "no such column: T3.pettype_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0062",
+   "group": "pets_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 862,
+   "output_tokens": 105,
+   "cost_usd": 0.0,
+   "seconds": 0.004,
+   "question": "What major is every student who does not own a cat as a pet, and also how old are they?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT major ,  age_x FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+    "SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')"
+   ],
+   "errors": [
+    "no such column: age_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0064",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 387,
+   "output_tokens": 47,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the ids of the students who do not own cats as pets?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0067",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 383,
+   "output_tokens": 17,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the type and weight of the youngest pet.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0069",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 387,
+   "output_tokens": 15,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the id and weight of all pets whose age is older than 1.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT petid ,  weight FROM pets WHERE pet_age  >  1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0070",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 387,
+   "output_tokens": 15,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the id and weight of every pet who is older than 1?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT petid ,  weight FROM pets WHERE pet_age  >  1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0071",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 386,
+   "output_tokens": 21,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the average and maximum age for each type of pet.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0074",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 384,
+   "output_tokens": 16,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the average weight for each type of pet?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0075",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 386,
+   "output_tokens": 27,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the first name and age of students who have a pet.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0076",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 391,
+   "output_tokens": 27,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What are the different first names and ages of the students who do have pets?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0077",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 389,
+   "output_tokens": 29,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the id of the pet owned by student whose last name is \u2018Smith\u2019.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0079",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 390,
+   "output_tokens": 29,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Find the number of pets for each student who has any pet and student id.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0083",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 388,
+   "output_tokens": 44,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Find the last name of the student who has a cat that is age 3.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat'"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0086",
+   "group": "pets_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 389,
+   "output_tokens": 21,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the average age for all students who do not own any pets ?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select avg(age) from student where stuid not in (select stuid from has_pet)"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0707",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 719,
+   "output_tokens": 19,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "How much surface area do the countires in the Carribean cover together?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT sum(SurfaceArea) FROM country WHERE Region  =  \"Caribbean\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0729",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 714,
+   "output_tokens": 18,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is the total population of Gelderland district?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT sum(Population) FROM city WHERE District  =  \"Gelderland\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0735",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 716,
+   "output_tokens": 22,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "How many different forms of governments are there in Africa?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent  =  \"Africa\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0740",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 719,
+   "output_tokens": 37,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What is name of the country that speaks the largest number of languages?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0747",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 716,
+   "output_tokens": 66,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Give the names of nations that speak both English and French.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" INTERSECT SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"French\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0751",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 710,
+   "output_tokens": 38,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "How many continents speak Chinese?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT COUNT( DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"Chinese\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0753",
+   "group": "world_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1486,
+   "output_tokens": 85,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "Which regions speak Dutch or English?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT DISTINCT T1.Region_x FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" OR T2.Language  =  \"Dutch\"",
+    "SELECT DISTINCT T1.Region FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" OR T2.Language  =  \"Dutch\""
+   ],
+   "errors": [
+    "no such column: T1.Region_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0755",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 718,
+   "output_tokens": 73,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "Which countries have either English or Dutch as an official language?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT * FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" AND IsOfficial  =  \"T\" UNION SELECT * FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"Dutch\" AND IsOfficial  =  \"T\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0763",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 723,
+   "output_tokens": 32,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the name, population, and life expectancy of the largest Asian country by land?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT Name ,  Population ,  LifeExpectancy FROM country WHERE Continent  =  \"Asia\" ORDER BY SurfaceArea DESC LIMIT 1"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0764",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 724,
+   "output_tokens": 54,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is average life expectancy in the countries where English is not the official language?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\" AND T2.IsOfficial  =  \"T\")"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0767",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 716,
+   "output_tokens": 47,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "How many people live in countries that do not speak English?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  \"English\")"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0776",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 722,
+   "output_tokens": 37,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Which Asian countries have a population that is larger than any country in Africa?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT Name FROM country WHERE Continent  =  \"Asia\"  AND population  >  (SELECT max(population) FROM country WHERE Continent  =  \"Africa\")"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0799",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 745,
+   "output_tokens": 33,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What are the different continents and the total popuation and average life expectancy corresponding to each, for continents that have an average life expectancy less than 72?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT sum(Population) ,  avg(LifeExpectancy) ,  Continent FROM country GROUP BY Continent HAVING avg(LifeExpectancy)  <  72"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0802",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 717,
+   "output_tokens": 17,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are names of countries with the top 3 largest population?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT Name FROM country ORDER BY Population DESC LIMIT 3"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0808",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 727,
+   "output_tokens": 22,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What are the names of the countries that are in the continent of Europe and have a population of 80000?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT Name FROM country WHERE continent  =  \"Europe\" AND Population  =  \"80000\""
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0810",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 732,
+   "output_tokens": 31,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "What is the total population and average area of countries in the continent of North America whose area is bigger than 3000 ?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "select sum(population) ,  avg(surfacearea) from country where continent  =  \"north america\" and surfacearea  >  3000"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0817",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 735,
+   "output_tokens": 25,
+   "cost_usd": 0.0,
+   "seconds": 0.002,
+   "question": "What are the country codes of the different countries, and what are the languages spoken by the greatest percentage of people for each?",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode"
+   ],
+   "errors": [
+    null
+   ]
+  },
+  {
+   "id": "dev0818",
+   "group": "world_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1504,
+   "output_tokens": 58,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What is the total number of countries where Spanish is spoken by the largest percentage of people?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT count(*) ,   max(Percentage_x) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode",
+    "SELECT count(*) ,   max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode"
+   ],
+   "errors": [
+    "no such column: Percentage_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0820",
+   "group": "world_1",
+   "first": "schema error",
+   "final": "correct",
+   "attempts": 2,
+   "input_tokens": 1501,
+   "output_tokens": 59,
+   "cost_usd": 0.0,
+   "seconds": 0.003,
+   "question": "What are the codes of countries where Spanish is spoken by the largest percentage of people?",
+   "path": [
+    "schema error",
+    "correct"
+   ],
+   "sql": [
+    "SELECT CountryCode ,  max(Percentage_x) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode",
+    "SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode"
+   ],
+   "errors": [
+    "no such column: Percentage_x",
+    null
+   ]
+  },
+  {
+   "id": "dev0821",
+   "group": "world_1",
+   "first": "correct",
+   "final": "correct",
+   "attempts": 1,
+   "input_tokens": 722,
+   "output_tokens": 29,
+   "cost_usd": 0.0,
+   "seconds": 0.001,
+   "question": "Return the codes of countries for which Spanish is the predominantly spoken language.",
+   "path": [
+    "correct"
+   ],
+   "sql": [
+    "SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode"
+   ],
+   "errors": [
+    null
+   ]
+  }
+ ]
+}
